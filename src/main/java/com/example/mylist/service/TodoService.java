@@ -1,42 +1,50 @@
 package com.example.mylist.service;
 
+import com.example.mylist.exception.ResourceNotFoundException;
 import com.example.mylist.model.Todo;
 import com.example.mylist.repository.TodoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
 @Service
 public class TodoService {
 
-    private final TodoRepository repo;
-
-    public TodoService(TodoRepository repo) {
-        this.repo = repo;
-    }
+    @Autowired
+    private TodoRepository repo;
 
     public List<Todo> getAllTasks() {
         return repo.findAll();
+    }
+
+    public Todo getTaskById(int id) {
+        return repo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Task not found with id " + id));
     }
 
     public Todo addTask(Todo todo) {
         return repo.save(todo);
     }
 
-    public void deleteTask(int id) {
-        if (!repo.existsById(id)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Todo not found");
-        }
-        repo.deleteById(id);
-    }
-
     public Todo updateTask(int id, Todo newTodo) {
-        Todo todo = repo.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Todo not found"));
+        Todo todo = getTaskById(id);
+
         todo.setTitle(newTodo.getTitle());
         todo.setTaskDescription(newTodo.getTaskDescription());
+        todo.setCompleted(newTodo.isCompleted());
+
+        return repo.save(todo);
+    }
+
+    public void deleteTask(int id) {
+        Todo todo = getTaskById(id);
+        repo.delete(todo);
+    }
+
+    public Todo toggleStatus(int id) {
+        Todo todo = getTaskById(id);
+        todo.setCompleted(!todo.isCompleted());
         return repo.save(todo);
     }
 }

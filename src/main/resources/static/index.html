@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
     <title>MyList</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -11,12 +10,12 @@
     <h1>MyList</h1>
 
     <div class="input-section">
-        <input type="text" id="title" placeholder="Title">
-        <input type="text" id="desc" placeholder="Task description">
+        <input id="title" placeholder="Title">
+        <input id="desc" placeholder="Description">
         <button onclick="addTask()">Add</button>
     </div>
 
-    <div id="taskList" class="task-list"></div>
+    <div id="taskList"></div>
 </div>
 
 <script src="script.js"></script>
