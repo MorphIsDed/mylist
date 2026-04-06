@@ -1,53 +1,57 @@
 package com.example.mylist.controller;
 
-import com.example.mylist.model.Todo;
+import com.example.mylist.dto.TodoRequest;
+import com.example.mylist.dto.TodoResponse;
+import com.example.mylist.security.AuthenticatedUserService;
 import com.example.mylist.service.TodoService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/todos")
-@CrossOrigin("*")
+@RequestMapping("/api/todos")
 public class TodoController {
 
     private final TodoService service;
+    private final AuthenticatedUserService authenticatedUserService;
 
-    public TodoController(TodoService service) {
+    public TodoController(TodoService service, AuthenticatedUserService authenticatedUserService) {
         this.service = service;
+        this.authenticatedUserService = authenticatedUserService;
     }
 
     @GetMapping
-    public List<Todo> getAllTasks() {
-        return service.getAllTasks();
+    public List<TodoResponse> getAllTasks(Authentication authentication) {
+        return service.getAllTasks(authenticatedUserService.email(authentication));
     }
 
     @GetMapping("/{id}")
-    public Todo getTask(@PathVariable int id) {
-        return service.getTaskById(id);
+    public TodoResponse getTask(@PathVariable int id, Authentication authentication) {
+        return service.getTaskById(id, authenticatedUserService.email(authentication));
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Todo addTask(@Valid @RequestBody Todo todo) {
-        return service.addTask(todo);
+    public TodoResponse addTask(@Valid @RequestBody TodoRequest todo, Authentication authentication) {
+        return service.addTask(todo, authenticatedUserService.email(authentication));
     }
 
     @PutMapping("/{id}")
-    public Todo updateTask(@PathVariable int id, @RequestBody Todo todo) {
-        return service.updateTask(id, todo);
+    public TodoResponse updateTask(@PathVariable int id, @Valid @RequestBody TodoRequest todo, Authentication authentication) {
+        return service.updateTask(id, todo, authenticatedUserService.email(authentication));
     }
 
     @DeleteMapping("/{id}")
-    public String deleteTask(@PathVariable int id) {
-        service.deleteTask(id);
-        return "Task deleted successfully";
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteTask(@PathVariable int id, Authentication authentication) {
+        service.deleteTask(id, authenticatedUserService.email(authentication));
     }
 
     @PutMapping("/toggle/{id}")
-    public Todo toggleTask(@PathVariable int id) {
-        return service.toggleStatus(id);
+    public TodoResponse toggleTask(@PathVariable int id, Authentication authentication) {
+        return service.toggleStatus(id, authenticatedUserService.email(authentication));
     }
 }

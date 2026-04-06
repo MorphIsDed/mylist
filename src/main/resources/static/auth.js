@@ -1,83 +1,71 @@
-const AUTH_STORAGE_KEY = "mylist.authUser";
+const AUTH_ME_URL = "/api/auth/me";
 
-function getAuthUser() {
-    const raw = localStorage.getItem(AUTH_STORAGE_KEY);
-    if (!raw) {
+let currentUser = null;
+
+async function fetchCurrentUser() {
+    const response = await fetch(AUTH_ME_URL, {
+        headers: { "Accept": "application/json" }
+    });
+
+    if (response.status === 401) {
         return null;
     }
-    try {
-        return JSON.parse(raw);
-    } catch (error) {
+
+    if (!response.ok) {
+        throw new Error("Failed to load current user");
+    }
+
+    currentUser = await response.json();
+    return currentUser;
+}
+
+async function requireAuth() {
+    const user = await fetchCurrentUser();
+    if (!user) {
+        window.location.href = "/login.html";
         return null;
     }
+    return user;
 }
 
-function requireAuth() {
-    if (!getAuthUser()) {
-        window.location.href = "login.html";
-    }
-}
-
-function populateUserUi() {
-    const user = getAuthUser();
+function populateUserUi(user = currentUser) {
     if (!user) {
         return;
     }
 
-    const name = user.name || "User";
+    const name = user.name || user.email || "User";
     const initial = name.trim().charAt(0).toUpperCase();
-    const nameTargets = ["currentUserName", "settingsUserName"];
-    const markTargets = ["profileMark", "settingsProfileMark"];
 
-    nameTargets.forEach(id => {
-        const node = document.getElementById(id);
-        if (node) {
-            node.textContent = name;
+    ["currentUserName", "settingsUserName"].forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.textContent = name;
         }
     });
 
-    markTargets.forEach(id => {
-        const node = document.getElementById(id);
-        if (node) {
-            node.textContent = initial;
+    ["profileMark", "settingsProfileMark"].forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.textContent = initial;
         }
     });
 }
 
 function logout() {
-    localStorage.removeItem(AUTH_STORAGE_KEY);
-    window.location.href = "login.html";
+    window.location.href = "/logout";
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     if (document.body.dataset.page === "login") {
-        const user = getAuthUser();
+        const user = await fetchCurrentUser();
         if (user) {
-            window.location.href = "index.html";
-            return;
-        }
-
-        const form = document.getElementById("loginForm");
-        if (form) {
-            form.addEventListener("submit", event => {
-                event.preventDefault();
-
-                const name = document.getElementById("loginName").value.trim();
-                const email = document.getElementById("loginEmail").value.trim();
-                const password = document.getElementById("loginPassword").value.trim();
-                if (!name || !email || !password) {
-                    return;
-                }
-
-                localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify({ name, email }));
-                window.location.href = "index.html";
-            });
+            window.location.href = "/index.html";
         }
     }
 });
 
 window.MyListAuth = {
-    getAuthUser,
+    fetchCurrentUser,
     requireAuth,
     populateUserUi,
     logout
