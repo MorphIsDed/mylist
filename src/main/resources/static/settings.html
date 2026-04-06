@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyList Settings</title>
+    <link rel="stylesheet" href="style.css?v=3">
+</head>
+<body data-page="settings">
+<div class="app-shell">
+    <header class="site-header compact">
+        <div class="brand-block">
+            <p class="eyebrow" data-i18n="settingsEyebrow">Preferences</p>
+            <div class="brand-row">
+                <h1 data-i18n="settingsTitle">Customize MyList</h1>
+                <span class="brand-chip" data-i18n="settingsChip">Personal workspace</span>
+            </div>
+            <p class="brand-copy" data-i18n="settingsDescription">Adjust the visual style and language so the app fits the way you like to work.</p>
+        </div>
+
+        <nav class="top-nav" aria-label="Primary">
+            <a class="nav-link" href="index.html" data-i18n="navHome">Tasks</a>
+            <a class="nav-link active" href="settings.html" data-i18n="navSettings">Settings</a>
+        </nav>
+    </header>
+
+    <main class="settings-layout">
+        <section class="panel settings-panel">
+            <div class="panel-heading">
+                <div>
+                    <p class="section-kicker" data-i18n="appearanceKicker">Appearance</p>
+                    <h2 data-i18n="appearanceTitle">Theme and typography</h2>
+                </div>
+            </div>
+
+            <div class="settings-grid">
+                <div class="field-group">
+                    <label for="themeSelect" data-i18n="themeLabel">Theme</label>
+                    <select id="themeSelect">
+                        <option value="sunrise" data-i18n="themeSunrise">Sunrise</option>
+                        <option value="forest" data-i18n="themeForest">Forest</option>
+                        <option value="midnight" data-i18n="themeMidnight">Midnight</option>
+                    </select>
+                </div>
+
+                <div class="field-group">
+                    <label for="fontSelect" data-i18n="fontLabel">Font</label>
+                    <select id="fontSelect">
+                        <option value="modern" data-i18n="fontModern">Modern</option>
+                        <option value="editorial" data-i18n="fontEditorial">Editorial</option>
+                        <option value="classic" data-i18n="fontClassic">Classic</option>
+                    </select>
+                </div>
+
+                <div class="field-group">
+                    <label for="languageSelect" data-i18n="languageLabel">Language</label>
+                    <select id="languageSelect">
+                        <option value="en" data-i18n="languageEnglish">English</option>
+                        <option value="hi" data-i18n="languageHindi">Hindi</option>
+                        <option value="es" data-i18n="languageSpanish">Spanish</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="settings-actions">
+                <button type="button" class="primary-btn" onclick="saveSettings()" data-i18n="saveSettings">Save changes</button>
+                <button type="button" class="secondary-btn" onclick="resetSettings()" data-i18n="resetSettings">Reset defaults</button>
+            </div>
+        </section>
+
+        <section class="panel preview-panel">
+            <div class="panel-heading">
+                <div>
+                    <p class="section-kicker" data-i18n="previewKicker">Preview</p>
+                    <h2 data-i18n="previewTitle">See your setup before leaving</h2>
+                </div>
+            </div>
+
+            <div class="preview-card">
+                <div class="preview-top">
+                    <span class="preview-pill" data-i18n="previewPill">Live preview</span>
+                    <span class="preview-date" id="previewDate"></span>
+                </div>
+                <h3 data-i18n="previewTaskTitle">Finish the product polish</h3>
+                <p data-i18n="previewTaskBody">Review details, check deadlines, and keep the interface sharp and usable.</p>
+                <div class="preview-meta">
+                    <span class="meta-chip high" data-i18n="priorityHigh">High</span>
+                    <span class="meta-chip" data-i18n="previewDueDate">Due in two days</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p data-i18n="footerCopy">Made with care for a calmer workflow.</p>
+        <p>Made by Abhinay Kumar Sahu</p>
+    </footer>
+</div>
+
+<script src="preferences.js?v=3"></script>
+<script src="settings.js?v=3"></script>
+</body>
+</html>

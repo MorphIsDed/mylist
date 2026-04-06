@@ -1,0 +1,343 @@
+const DEFAULT_PREFERENCES = {
+    theme: "midnight",
+    font: "modern",
+    language: "en"
+};
+
+const TRANSLATIONS = {
+    en: {
+        brandTag: "Daily flow",
+        appTitle: "MyList",
+        brandChip: "Focused planning",
+        headerSubtitle: "Organize work, track deadlines, and keep momentum without clutter.",
+        navHome: "Tasks",
+        navSettings: "Settings",
+        heroEyebrow: "Stay in control",
+        heroTitle: "A cleaner way to plan the day",
+        heroDescription: "Capture tasks, set priority, add due dates, and review progress from one compact workspace.",
+        statTotal: "Total tasks",
+        statActive: "Active",
+        statCompleted: "Completed",
+        statDueSoon: "Due soon",
+        taskComposerKicker: "Task composer",
+        taskComposerTitle: "Add a new task",
+        cancelEdit: "Cancel edit",
+        fieldTitle: "Title",
+        fieldDescription: "Description",
+        fieldDueDate: "Due date",
+        fieldPriority: "Priority",
+        priorityLow: "Low",
+        priorityMedium: "Medium",
+        priorityHigh: "High",
+        addTaskButton: "Add task",
+        updateTaskButton: "Update task",
+        resetForm: "Reset",
+        taskBoardKicker: "Task board",
+        taskBoardTitle: "Plan, review, and finish",
+        clearCompleted: "Clear completed",
+        searchLabel: "Search tasks",
+        searchPlaceholder: "Search by title or description",
+        filterAll: "All",
+        filterActive: "Active",
+        filterCompleted: "Completed",
+        filterToday: "Due today",
+        filterOverdue: "Overdue",
+        sortDueDate: "Sort by due date",
+        sortPriority: "Sort by priority",
+        sortTitle: "Sort by title",
+        sortRecent: "Newest first",
+        quickAll: "Everything",
+        quickHigh: "High priority",
+        quickDueSoon: "Due soon",
+        quickDone: "Completed",
+        footerCopy: "Made with care for a calmer workflow.",
+        settingsEyebrow: "Preferences",
+        settingsTitle: "Customize MyList",
+        settingsChip: "Personal workspace",
+        settingsDescription: "Adjust the visual style and language so the app fits the way you like to work.",
+        appearanceKicker: "Appearance",
+        appearanceTitle: "Theme and typography",
+        themeLabel: "Theme",
+        fontLabel: "Font",
+        languageLabel: "Language",
+        themeSunrise: "Sunrise",
+        themeForest: "Forest",
+        themeMidnight: "Midnight",
+        fontModern: "Modern",
+        fontEditorial: "Editorial",
+        fontClassic: "Classic",
+        languageEnglish: "English",
+        languageHindi: "Hindi",
+        languageSpanish: "Spanish",
+        saveSettings: "Save changes",
+        resetSettings: "Reset defaults",
+        previewKicker: "Preview",
+        previewTitle: "See your setup before leaving",
+        previewPill: "Live preview",
+        previewTaskTitle: "Finish the product polish",
+        previewTaskBody: "Review details, check deadlines, and keep the interface sharp and usable.",
+        previewDueDate: "Due in two days",
+        taskCountSummary: "{active} active of {total}",
+        emptyTitle: "Nothing matches this view.",
+        emptyDescription: "Add a task or change the filters to see more items.",
+        taskMetaNoDue: "No due date",
+        taskMetaOverdue: "Overdue",
+        taskMetaToday: "Due today",
+        editAction: "Edit",
+        deleteAction: "Delete",
+        completeAction: "Mark done",
+        reopenAction: "Reopen",
+        toggleDoneLabel: "Done",
+        toggleOpenLabel: "Open",
+        savedToast: "Settings saved.",
+        resetToast: "Preferences reset.",
+        addToast: "Task added.",
+        updateToast: "Task updated.",
+        deleteToast: "Task deleted.",
+        clearToast: "Completed tasks cleared.",
+        validationTitle: "Please enter a title."
+    },
+    hi: {
+        brandTag: "रोज़ का फ्लो",
+        appTitle: "MyList",
+        brandChip: "फोकस्ड प्लानिंग",
+        headerSubtitle: "काम को व्यवस्थित करें, समय सीमा देखें और बिना अव्यवस्था के आगे बढ़ें।",
+        navHome: "टास्क",
+        navSettings: "सेटिंग्स",
+        heroEyebrow: "नियंत्रण में रहें",
+        heroTitle: "दिन को प्लान करने का साफ़ तरीका",
+        heroDescription: "टास्क जोड़ें, प्राथमिकता तय करें, ड्यू डेट रखें और प्रगति एक ही कॉम्पैक्ट जगह से देखें।",
+        statTotal: "कुल टास्क",
+        statActive: "चालू",
+        statCompleted: "पूरा",
+        statDueSoon: "जल्द देय",
+        taskComposerKicker: "टास्क कम्पोजर",
+        taskComposerTitle: "नया टास्क जोड़ें",
+        cancelEdit: "एडिट रद्द करें",
+        fieldTitle: "शीर्षक",
+        fieldDescription: "विवरण",
+        fieldDueDate: "ड्यू डेट",
+        fieldPriority: "प्राथमिकता",
+        priorityLow: "कम",
+        priorityMedium: "मध्यम",
+        priorityHigh: "उच्च",
+        addTaskButton: "टास्क जोड़ें",
+        updateTaskButton: "टास्क अपडेट करें",
+        resetForm: "रीसेट",
+        taskBoardKicker: "टास्क बोर्ड",
+        taskBoardTitle: "प्लान करें, देखें और पूरा करें",
+        clearCompleted: "पूरे टास्क हटाएँ",
+        searchLabel: "टास्क खोजें",
+        searchPlaceholder: "शीर्षक या विवरण से खोजें",
+        filterAll: "सभी",
+        filterActive: "चालू",
+        filterCompleted: "पूरा",
+        filterToday: "आज देय",
+        filterOverdue: "ओवरड्यू",
+        sortDueDate: "ड्यू डेट से सॉर्ट करें",
+        sortPriority: "प्राथमिकता से सॉर्ट करें",
+        sortTitle: "शीर्षक से सॉर्ट करें",
+        sortRecent: "नए पहले",
+        quickAll: "सब कुछ",
+        quickHigh: "उच्च प्राथमिकता",
+        quickDueSoon: "जल्द देय",
+        quickDone: "पूरा",
+        footerCopy: "शांत और साफ़ वर्कफ़्लो के लिए बनाया गया।",
+        settingsEyebrow: "पसंद",
+        settingsTitle: "MyList को कस्टमाइज़ करें",
+        settingsChip: "आपका वर्कस्पेस",
+        settingsDescription: "थीम, फ़ॉन्ट और भाषा बदलें ताकि ऐप आपके काम करने के तरीके से मेल खाए।",
+        appearanceKicker: "दिखावट",
+        appearanceTitle: "थीम और टाइपोग्राफी",
+        themeLabel: "थीम",
+        fontLabel: "फ़ॉन्ट",
+        languageLabel: "भाषा",
+        themeSunrise: "सनराइज़",
+        themeForest: "फॉरेस्ट",
+        themeMidnight: "मिडनाइट",
+        fontModern: "मॉडर्न",
+        fontEditorial: "एडिटोरियल",
+        fontClassic: "क्लासिक",
+        languageEnglish: "अंग्रेज़ी",
+        languageHindi: "हिंदी",
+        languageSpanish: "स्पैनिश",
+        saveSettings: "बदलाव सहेजें",
+        resetSettings: "डिफ़ॉल्ट रीसेट करें",
+        previewKicker: "प्रीव्यू",
+        previewTitle: "जाने से पहले अपना सेटअप देखें",
+        previewPill: "लाइव प्रीव्यू",
+        previewTaskTitle: "प्रोडक्ट पॉलिश पूरा करें",
+        previewTaskBody: "डिटेल्स देखें, डेडलाइन जांचें और इंटरफ़ेस को साफ़ और उपयोगी रखें।",
+        previewDueDate: "दो दिन में देय",
+        taskCountSummary: "{active} चालू / {total} कुल",
+        emptyTitle: "इस दृश्य में कुछ नहीं मिला।",
+        emptyDescription: "एक नया टास्क जोड़ें या फ़िल्टर बदलें।",
+        taskMetaNoDue: "कोई ड्यू डेट नहीं",
+        taskMetaOverdue: "ओवरड्यू",
+        taskMetaToday: "आज देय",
+        editAction: "एडिट",
+        deleteAction: "डिलीट",
+        completeAction: "पूरा करें",
+        reopenAction: "फिर खोलें",
+        toggleDoneLabel: "पूरा",
+        toggleOpenLabel: "खुला",
+        savedToast: "सेटिंग्स सहेजी गईं।",
+        resetToast: "पसंद रीसेट की गईं।",
+        addToast: "टास्क जोड़ा गया।",
+        updateToast: "टास्क अपडेट हुआ।",
+        deleteToast: "टास्क हटाया गया।",
+        clearToast: "पूरे टास्क हटा दिए गए।",
+        validationTitle: "कृपया शीर्षक दर्ज करें।"
+    },
+    es: {
+        brandTag: "Flujo diario",
+        appTitle: "MyList",
+        brandChip: "Planificacion enfocada",
+        headerSubtitle: "Organiza el trabajo, revisa fechas limite y mantente en ritmo sin desorden.",
+        navHome: "Tareas",
+        navSettings: "Ajustes",
+        heroEyebrow: "Mantente en control",
+        heroTitle: "Una forma mas limpia de planear el dia",
+        heroDescription: "Captura tareas, define prioridad, agrega fechas y revisa el progreso en un espacio compacto.",
+        statTotal: "Tareas totales",
+        statActive: "Activas",
+        statCompleted: "Completadas",
+        statDueSoon: "Proximas",
+        taskComposerKicker: "Editor de tareas",
+        taskComposerTitle: "Agregar una nueva tarea",
+        cancelEdit: "Cancelar edicion",
+        fieldTitle: "Titulo",
+        fieldDescription: "Descripcion",
+        fieldDueDate: "Fecha limite",
+        fieldPriority: "Prioridad",
+        priorityLow: "Baja",
+        priorityMedium: "Media",
+        priorityHigh: "Alta",
+        addTaskButton: "Agregar tarea",
+        updateTaskButton: "Actualizar tarea",
+        resetForm: "Restablecer",
+        taskBoardKicker: "Panel de tareas",
+        taskBoardTitle: "Planifica, revisa y termina",
+        clearCompleted: "Borrar completadas",
+        searchLabel: "Buscar tareas",
+        searchPlaceholder: "Buscar por titulo o descripcion",
+        filterAll: "Todas",
+        filterActive: "Activas",
+        filterCompleted: "Completadas",
+        filterToday: "Vencen hoy",
+        filterOverdue: "Atrasadas",
+        sortDueDate: "Ordenar por fecha",
+        sortPriority: "Ordenar por prioridad",
+        sortTitle: "Ordenar por titulo",
+        sortRecent: "Mas nuevas primero",
+        quickAll: "Todo",
+        quickHigh: "Alta prioridad",
+        quickDueSoon: "Proximas",
+        quickDone: "Completadas",
+        footerCopy: "Hecho con cuidado para un flujo mas tranquilo.",
+        settingsEyebrow: "Preferencias",
+        settingsTitle: "Personaliza MyList",
+        settingsChip: "Espacio personal",
+        settingsDescription: "Ajusta el estilo visual y el idioma para que la aplicacion se adapte a ti.",
+        appearanceKicker: "Apariencia",
+        appearanceTitle: "Tema y tipografia",
+        themeLabel: "Tema",
+        fontLabel: "Fuente",
+        languageLabel: "Idioma",
+        themeSunrise: "Sunrise",
+        themeForest: "Forest",
+        themeMidnight: "Midnight",
+        fontModern: "Moderna",
+        fontEditorial: "Editorial",
+        fontClassic: "Clasica",
+        languageEnglish: "Ingles",
+        languageHindi: "Hindi",
+        languageSpanish: "Espanol",
+        saveSettings: "Guardar cambios",
+        resetSettings: "Restablecer",
+        previewKicker: "Vista previa",
+        previewTitle: "Mira tu configuracion antes de salir",
+        previewPill: "Vista previa",
+        previewTaskTitle: "Termina el pulido del producto",
+        previewTaskBody: "Revisa detalles, controla fechas y manten la interfaz clara y util.",
+        previewDueDate: "Vence en dos dias",
+        taskCountSummary: "{active} activas de {total}",
+        emptyTitle: "Nada coincide con esta vista.",
+        emptyDescription: "Agrega una tarea o cambia los filtros para ver mas elementos.",
+        taskMetaNoDue: "Sin fecha",
+        taskMetaOverdue: "Atrasada",
+        taskMetaToday: "Vence hoy",
+        editAction: "Editar",
+        deleteAction: "Eliminar",
+        completeAction: "Completar",
+        reopenAction: "Reabrir",
+        toggleDoneLabel: "Hecha",
+        toggleOpenLabel: "Abierta",
+        savedToast: "Ajustes guardados.",
+        resetToast: "Preferencias restablecidas.",
+        addToast: "Tarea agregada.",
+        updateToast: "Tarea actualizada.",
+        deleteToast: "Tarea eliminada.",
+        clearToast: "Se borraron las completadas.",
+        validationTitle: "Ingresa un titulo."
+    }
+};
+
+function getPreferences() {
+    const raw = localStorage.getItem("mylist.preferences");
+    if (!raw) {
+        return { ...DEFAULT_PREFERENCES };
+    }
+
+    try {
+        return { ...DEFAULT_PREFERENCES, ...JSON.parse(raw) };
+    } catch (error) {
+        return { ...DEFAULT_PREFERENCES };
+    }
+}
+
+function savePreferences(preferences) {
+    localStorage.setItem("mylist.preferences", JSON.stringify(preferences));
+}
+
+function getTranslations(language) {
+    return TRANSLATIONS[language] || TRANSLATIONS.en;
+}
+
+function translate(key) {
+    const preferences = getPreferences();
+    return getTranslations(preferences.language)[key] || TRANSLATIONS.en[key] || key;
+}
+
+function applyPreferences() {
+    const preferences = getPreferences();
+    document.documentElement.dataset.theme = preferences.theme;
+    document.documentElement.dataset.font = preferences.font;
+    document.documentElement.lang = preferences.language;
+
+    const dict = getTranslations(preferences.language);
+    document.querySelectorAll("[data-i18n]").forEach(element => {
+        const key = element.dataset.i18n;
+        if (dict[key]) {
+            element.textContent = dict[key];
+        }
+    });
+
+    document.querySelectorAll("[data-i18n-placeholder]").forEach(element => {
+        const key = element.dataset.i18nPlaceholder;
+        if (dict[key]) {
+            element.setAttribute("placeholder", dict[key]);
+        }
+    });
+}
+
+window.MyListPreferences = {
+    DEFAULT_PREFERENCES,
+    TRANSLATIONS,
+    getPreferences,
+    savePreferences,
+    applyPreferences,
+    translate
+};
+
+document.addEventListener("DOMContentLoaded", applyPreferences);
