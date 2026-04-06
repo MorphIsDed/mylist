@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyList Login</title>
+    <link rel="stylesheet" href="style.css?v=4">
+</head>
+<body data-page="login">
+<div class="login-shell">
+    <section class="login-stage">
+        <div class="login-glow login-glow-one"></div>
+        <div class="login-glow login-glow-two"></div>
+
+        <div class="login-showcase">
+            <p class="eyebrow" data-i18n="brandTag">Creative routine</p>
+            <h1 data-i18n="loginTitle">Welcome to a more cinematic task flow</h1>
+            <p class="muted-copy" data-i18n="loginDescription">Start with a calmer, fuller workspace built for focus, deadlines, and better visual rhythm.</p>
+
+            <div class="showcase-grid">
+                <article class="showcase-card">
+                    <span class="panel-label" data-i18n="loginFeatureOneLabel">Full board</span>
+                    <h3 data-i18n="loginFeatureOneTitle">See planning and execution together</h3>
+                </article>
+                <article class="showcase-card">
+                    <span class="panel-label" data-i18n="loginFeatureTwoLabel">Styled control</span>
+                    <h3 data-i18n="loginFeatureTwoTitle">Tune theme, font, and language anytime</h3>
+                </article>
+                <article class="showcase-card">
+                    <span class="panel-label" data-i18n="loginFeatureThreeLabel">Focused work</span>
+                    <h3 data-i18n="loginFeatureThreeTitle">Sort priorities and finish what matters first</h3>
+                </article>
+            </div>
+        </div>
+
+        <div class="login-card">
+            <p class="panel-label" data-i18n="loginPanelLabel">Login</p>
+            <h2 data-i18n="loginPanelTitle">Enter your workspace</h2>
+            <p class="muted-copy" data-i18n="loginPanelCopy">Use any name and email to continue. This is a local session for your personal app.</p>
+
+            <form id="loginForm" class="task-form">
+                <label class="field">
+                    <span data-i18n="loginNameLabel">Name</span>
+                    <input id="loginName" type="text" maxlength="80" required>
+                </label>
+
+                <label class="field">
+                    <span data-i18n="loginEmailLabel">Email</span>
+                    <input id="loginEmail" type="email" maxlength="120" required>
+                </label>
+
+                <label class="field">
+                    <span data-i18n="loginPasswordLabel">Password</span>
+                    <input id="loginPassword" type="password" minlength="4" required>
+                </label>
+
+                <div class="form-actions">
+                    <button type="submit" class="primary-action wide-action" data-i18n="loginButton">Enter MyList</button>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
+
+<script src="preferences.js?v=4"></script>
+<script src="auth.js?v=4"></script>
+</body>
+</html>
