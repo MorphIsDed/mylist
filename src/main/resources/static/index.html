@@ -1,23 +1,164 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>MyList</title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyList Workspace</title>
+    <link rel="stylesheet" href="style.css?v=5">
 </head>
-<body>
+<body data-page="home">
+<div class="page-shell">
+    <aside class="side-rail">
+        <div class="brand-stack">
+            <p class="eyebrow" data-i18n="brandTag">Creative routine</p>
+            <h1 data-i18n="appTitle">ToDo List</h1>
+            <p class="muted-copy" data-i18n="headerSubtitle">Shape your day with better rhythm, visible priorities, and cleaner momentum.</p>
+        </div>
 
-<div class="container">
-    <h1>MyList</h1>
+        <nav class="side-nav" aria-label="Primary">
+            <a class="nav-link active" href="index.html" data-i18n="navHome">Workspace</a>
+            <a class="nav-link" href="settings.html" data-i18n="navSettings">Settings</a>
+        </nav>
 
-    <div class="input-section">
-        <input id="title" placeholder="Title">
-        <input id="desc" placeholder="Description">
-        <button onclick="addTask()">Add</button>
-    </div>
+        <section class="side-panel profile-panel">
+            <div class="profile-mark" id="profileMark">A</div>
+            <div>
+                <p class="panel-label" data-i18n="welcomeLabel">Welcome back</p>
+                <h2 id="currentUserName">Abhinay</h2>
+                <p class="muted-copy" data-i18n="welcomeCopy">Plan deeply, then move fast.</p>
+            </div>
+            <div class="profile-actions">
+                <a class="ghost-action" href="settings.html" data-i18n="customizeAction">Customize</a>
+                <button id="logoutBtn" type="button" class="ghost-action" data-action="logout" data-i18n="logoutAction">Logout</button>
+            </div>
+        </section>
 
-    <div id="taskList"></div>
+        <section class="side-panel composer-panel">
+            <div class="panel-head compact">
+                <div>
+                    <p class="panel-label" data-i18n="taskComposerKicker">Task composer</p>
+                    <h3 id="formHeading" data-i18n="taskComposerTitle">Create a focused task</h3>
+                </div>
+                <button id="cancelEditBtn" type="button" class="ghost-action hidden" data-action="cancel-edit" data-i18n="cancelEdit">Cancel</button>
+            </div>
+
+            <form id="taskForm" class="task-form">
+                <label class="field">
+                    <span data-i18n="fieldTitle">Title</span>
+                    <input id="title" type="text" maxlength="120" required>
+                </label>
+
+                <label class="field">
+                    <span data-i18n="fieldDescription">Description</span>
+                    <textarea id="desc" rows="4" maxlength="400"></textarea>
+                </label>
+
+                <div class="field-row">
+                    <label class="field">
+                        <span data-i18n="fieldDueDate">Due date</span>
+                        <input id="dueDate" type="date">
+                    </label>
+
+                    <label class="field">
+                        <span data-i18n="fieldPriority">Priority</span>
+                        <select id="priority">
+                            <option value="low" data-i18n="priorityLow">Low</option>
+                            <option value="medium" selected data-i18n="priorityMedium">Medium</option>
+                            <option value="high" data-i18n="priorityHigh">High</option>
+                        </select>
+                    </label>
+                </div>
+
+                <div class="form-actions">
+                    <button id="submitBtn" type="submit" class="primary-action" data-i18n="addTaskButton">Add task</button>
+                    <button type="button" class="ghost-action" data-action="reset-form" data-i18n="resetForm">Reset</button>
+                </div>
+            </form>
+        </section>
+    </aside>
+
+    <main class="workspace">
+        <header class="top-banner">
+            <div class="banner-copy">
+                <p class="eyebrow" data-i18n="heroEyebrow">Studio board</p>
+                <h2 data-i18n="heroTitle">Make the whole week visible</h2>
+                <p class="muted-copy" data-i18n="heroDescription">A fuller task surface with deadlines, status, and quick editing in one place.</p>
+            </div>
+
+            <div class="banner-grid">
+                <article class="metric-card metric-primary">
+                    <span data-i18n="statTotal">Total tasks</span>
+                    <strong id="totalCount">0</strong>
+                </article>
+                <article class="metric-card">
+                    <span data-i18n="statActive">In motion</span>
+                    <strong id="activeCount">0</strong>
+                </article>
+                <article class="metric-card">
+                    <span data-i18n="statCompleted">Completed</span>
+                    <strong id="completedCount">0</strong>
+                </article>
+                <article class="metric-card">
+                    <span data-i18n="statDueSoon">Due soon</span>
+                    <strong id="dueSoonCount">0</strong>
+                </article>
+            </div>
+        </header>
+
+        <section class="board-surface">
+            <div class="board-head">
+                <div>
+                    <p class="panel-label" data-i18n="taskBoardKicker">Command center</p>
+                    <h3 data-i18n="taskBoardTitle">Review, sort, and finish work</h3>
+                </div>
+                <button type="button" class="ghost-action" data-action="clear-completed" data-i18n="clearCompleted">Clear completed</button>
+            </div>
+
+            <div class="control-strip">
+                <label class="search-field">
+                    <span class="visually-hidden" data-i18n="searchLabel">Search tasks</span>
+                    <input id="searchInput" type="search" data-i18n-placeholder="searchPlaceholder" placeholder="Search tasks">
+                </label>
+
+                <div class="control-group">
+                    <select id="statusFilter">
+                        <option value="all" data-i18n="filterAll">All</option>
+                        <option value="active" data-i18n="filterActive">Active</option>
+                        <option value="completed" data-i18n="filterCompleted">Completed</option>
+                        <option value="today" data-i18n="filterToday">Today</option>
+                        <option value="overdue" data-i18n="filterOverdue">Overdue</option>
+                    </select>
+
+                    <select id="sortOrder">
+                        <option value="dueDateAsc" data-i18n="sortDueDate">Due date</option>
+                        <option value="priorityDesc" data-i18n="sortPriority">Priority</option>
+                        <option value="titleAsc" data-i18n="sortTitle">Title</option>
+                        <option value="recent" data-i18n="sortRecent">Newest</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="chip-row" id="quickFilters">
+                <button type="button" class="chip" data-action="quick-filter" data-filter="all" data-i18n="quickAll">Everything</button>
+                <button type="button" class="chip" data-action="quick-filter" data-filter="high" data-i18n="quickHigh">High priority</button>
+                <button type="button" class="chip" data-action="quick-filter" data-filter="dueSoon" data-i18n="quickDueSoon">Due soon</button>
+                <button type="button" class="chip" data-action="quick-filter" data-filter="completed" data-i18n="quickDone">Completed</button>
+            </div>
+
+            <div id="boardStatus" class="board-status hidden" role="status" aria-live="polite"></div>
+            <section id="taskList" class="task-grid" aria-live="polite"></section>
+        </section>
+
+        <footer class="page-footer">
+            <p data-i18n="footerCopy">Made with care for a calmer workflow.</p>
+            <p>Made by Abhinay Kumar Sahu</p>
+        </footer>
+    </main>
 </div>
 
-<script src="script.js"></script>
+<script src="preferences.js?v=5"></script>
+<script src="auth.js?v=5"></script>
+<script src="script.js?v=5"></script>
+<div id="liveRegion" class="visually-hidden" aria-live="assertive" aria-atomic="true"></div>
 </body>
 </html>

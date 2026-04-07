@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MyList Login</title>
-    <link rel="stylesheet" href="style.css?v=4">
+    <link rel="stylesheet" href="style.css?v=5">
 </head>
 <body data-page="login">
 <div class="login-shell">
@@ -36,33 +36,16 @@
         <div class="login-card">
             <p class="panel-label" data-i18n="loginPanelLabel">Login</p>
             <h2 data-i18n="loginPanelTitle">Enter your workspace</h2>
-            <p class="muted-copy" data-i18n="loginPanelCopy">Use any name and email to continue. This is a local session for your personal app.</p>
+            <p class="muted-copy" data-i18n="loginPanelCopy">Continue with Google so the backend can securely own authentication and your personal task space.</p>
 
-            <form id="loginForm" class="task-form">
-                <label class="field">
-                    <span data-i18n="loginNameLabel">Name</span>
-                    <input id="loginName" type="text" maxlength="80" required>
-                </label>
-
-                <label class="field">
-                    <span data-i18n="loginEmailLabel">Email</span>
-                    <input id="loginEmail" type="email" maxlength="120" required>
-                </label>
-
-                <label class="field">
-                    <span data-i18n="loginPasswordLabel">Password</span>
-                    <input id="loginPassword" type="password" minlength="4" required>
-                </label>
-
-                <div class="form-actions">
-                    <button type="submit" class="primary-action wide-action" data-i18n="loginButton">Enter MyList</button>
-                </div>
-            </form>
+            <div class="task-form">
+                <a class="primary-action wide-action oauth-button" href="/oauth2/authorization/google">Continue with Google</a>
+            </div>
         </div>
     </section>
 </div>
 
-<script src="preferences.js?v=4"></script>
-<script src="auth.js?v=4"></script>
+<script src="preferences.js?v=5"></script>
+<script src="auth.js?v=5"></script>
 </body>
 </html>
