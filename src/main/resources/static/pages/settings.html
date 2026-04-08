@@ -4,37 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MyList Settings</title>
-    <link rel="stylesheet" href="style.css?v=5">
+    <link rel="stylesheet" href="../css/style.css?v=5">
 </head>
 <body data-page="settings">
-<div class="page-shell">
-    <aside class="side-rail">
-        <div class="brand-stack">
+<div class="app-shell">
+    <header class="app-header">
+        <div class="header-brand brand-stack">
             <p class="eyebrow" data-i18n="settingsEyebrow">Preferences</p>
             <h1 data-i18n="settingsTitle">Tune your workspace</h1>
             <p class="muted-copy" data-i18n="settingsDescription">Change the mood, typography, and language without leaving the product atmosphere behind.</p>
         </div>
 
-        <nav class="side-nav" aria-label="Primary">
+        <nav class="app-nav" aria-label="Primary">
             <a class="nav-link" href="index.html" data-i18n="navHome">Workspace</a>
             <a class="nav-link active" href="settings.html" data-i18n="navSettings">Settings</a>
         </nav>
 
-        <section class="side-panel profile-panel">
+        <section class="header-profile">
             <div class="profile-mark" id="settingsProfileMark">A</div>
-            <div>
+            <div class="profile-summary">
                 <p class="panel-label" data-i18n="previewKicker">Preview</p>
                 <h2 id="settingsUserName">Abhinay</h2>
                 <p class="muted-copy" data-i18n="welcomeCopy">Plan deeply, then move fast.</p>
             </div>
-            <div class="profile-actions">
+            <div class="profile-actions header-actions">
                 <a class="ghost-action" href="index.html" data-i18n="navHome">Workspace</a>
                 <button type="button" class="ghost-action" data-action="logout" data-i18n="logoutAction">Logout</button>
             </div>
         </section>
-    </aside>
+    </header>
 
-    <main class="workspace">
+    <main class="workspace-layout">
         <header class="top-banner">
             <div class="banner-copy">
                 <p class="eyebrow" data-i18n="appearanceKicker">Appearance</p>
@@ -113,17 +113,17 @@
             </div>
             <div id="settingsStatus" class="board-status hidden" role="status" aria-live="polite"></div>
         </section>
-
-        <footer class="page-footer">
-            <p data-i18n="footerCopy">Made with care for a calmer workflow.</p>
-            <p>Made by Abhinay Kumar Sahu</p>
-        </footer>
     </main>
+
+    <footer class="app-footer">
+        <p data-i18n="footerCopy">Made with care for a calmer workflow.</p>
+        <p>Made by Abhinay Kumar Sahu</p>
+    </footer>
 </div>
 
-<script src="preferences.js?v=5"></script>
-<script src="auth.js?v=5"></script>
-<script src="settings.js?v=5"></script>
+<script src="../js/preferences.js?v=5"></script>
+<script src="../js/auth.js?v=5"></script>
+<script src="../js/settings.js?v=5"></script>
 <div id="liveRegion" class="visually-hidden" aria-live="assertive" aria-atomic="true"></div>
 </body>
 </html>

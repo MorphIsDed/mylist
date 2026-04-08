@@ -13,8 +13,8 @@ const ui = {};
 
 document.addEventListener("DOMContentLoaded", async () => {
     cacheUi();
-    restoreViewState();
     bindControls();
+    restoreViewState();
     syncFormLabels();
 
     if (window.MyListAuth) {
@@ -42,6 +42,8 @@ function cacheUi() {
     ui.quickFilters = document.getElementById("quickFilters");
     ui.boardStatus = document.getElementById("boardStatus");
     ui.liveRegion = document.getElementById("liveRegion");
+    ui.taskModal = document.getElementById("taskModal");
+    ui.openTaskModalBtn = document.getElementById("openTaskModalBtn");
 }
 
 function bindControls() {
@@ -71,6 +73,10 @@ function onDocumentActionClick(event) {
     const { action } = actionTarget.dataset;
     if (action === "logout") {
         logout();
+    } else if (action === "open-task-modal") {
+        openTaskModal(false);
+    } else if (action === "close-task-modal") {
+        dismissTaskModal();
     } else if (action === "cancel-edit") {
         cancelEdit();
     } else if (action === "reset-form") {
@@ -114,9 +120,11 @@ function onGlobalShortcuts(event) {
         ui.searchInput.focus();
     } else if (event.key.toLowerCase() === "n" && !typing) {
         event.preventDefault();
-        ui.title.focus();
+        openTaskModal(false);
     } else if (event.key === "Escape" && state.editingId !== null) {
         cancelEdit();
+    } else if (event.key === "Escape" && ui.taskModal && !ui.taskModal.classList.contains("hidden")) {
+        dismissTaskModal();
     } else if ((event.ctrlKey || event.metaKey) && event.key === "Enter" && typing) {
         ui.taskForm.requestSubmit();
     }
@@ -162,6 +170,7 @@ async function mutateTask(url, method, payload, successMessage, editingFlow) {
             cancelEdit();
         } else {
             resetForm();
+            closeTaskModal();
         }
         await loadTasks();
     } catch (error) {
@@ -316,18 +325,45 @@ function editTask(id) {
     ui.dueDate.value = task.dueDate || "";
     ui.priority.value = task.priority || "medium";
     syncFormLabels();
-    ui.title.focus();
+    openTaskModal(true);
 }
 
 function cancelEdit() {
     state.editingId = null;
     resetForm();
     syncFormLabels();
+    closeTaskModal();
 }
 
 function resetForm() {
     ui.taskForm.reset();
     ui.priority.value = "medium";
+}
+
+function openTaskModal(preserveState) {
+    if (!preserveState && state.editingId === null) {
+        resetForm();
+        syncFormLabels();
+    }
+    ui.taskModal.classList.remove("hidden");
+    document.body.classList.add("modal-open");
+    setTimeout(() => ui.title.focus(), 30);
+}
+
+function closeTaskModal() {
+    ui.taskModal.classList.add("hidden");
+    document.body.classList.remove("modal-open");
+    if (ui.openTaskModalBtn) {
+        ui.openTaskModalBtn.focus();
+    }
+}
+
+function dismissTaskModal() {
+    if (state.editingId !== null) {
+        cancelEdit();
+        return;
+    }
+    closeTaskModal();
 }
 
 function syncFormLabels() {

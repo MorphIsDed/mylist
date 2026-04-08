@@ -18,6 +18,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -149,6 +150,28 @@ class MylistApplicationTests {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.email").value("abhinay@example.com"))
                 .andExpect(jsonPath("$.name").value("Abhinay Kumar Sahu"));
+    }
+
+    @Test
+    void shouldRedirectLegacyPageUrlsToPagesDirectory() throws Exception {
+        mockMvc.perform(get("/login.html"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/pages/login.html"));
+
+        mockMvc.perform(get("/index.html"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/pages/index.html"));
+
+        mockMvc.perform(get("/settings.html"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/pages/settings.html"));
+    }
+
+    @Test
+    void shouldRedirectRootToHomePage() throws Exception {
+        mockMvc.perform(get("/"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/pages/index.html"));
     }
 
     private OAuth2LoginRequestPostProcessor googleUser(String email, String name) {

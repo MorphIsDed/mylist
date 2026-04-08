@@ -82,6 +82,10 @@ body {
         linear-gradient(140deg, var(--bg) 0%, var(--bg-2) 100%);
 }
 
+body.modal-open {
+    overflow: hidden;
+}
+
 body[data-page="login"] {
     min-height: 100vh;
 }
@@ -124,32 +128,60 @@ textarea {
     resize: vertical;
 }
 
-.page-shell {
+select {
+    appearance: none;
+    background:
+        linear-gradient(45deg, transparent 50%, var(--muted) 50%),
+        linear-gradient(135deg, var(--muted) 50%, transparent 50%),
+        rgba(255, 255, 255, 0.04);
+    background-position:
+        calc(100% - 22px) calc(50% - 3px),
+        calc(100% - 16px) calc(50% - 3px),
+        0 0;
+    background-size: 6px 6px, 6px 6px, 100% 100%;
+    background-repeat: no-repeat;
+    padding-right: 42px;
+}
+
+select option {
+    color: var(--text);
+    background: #13213a;
+}
+
+.app-shell {
     min-height: 100vh;
     display: grid;
-    grid-template-columns: 320px 1fr;
+    grid-template-rows: auto 1fr auto;
     gap: 22px;
     padding: 22px;
 }
 
-.side-rail,
+.workspace-layout {
+    display: grid;
+    gap: 22px;
+    min-width: 0;
+}
+
+.app-header,
+.app-footer,
 .top-banner,
 .board-surface,
-.page-footer,
 .login-card,
 .showcase-card,
-.profile-panel,
-.composer-panel,
-.settings-card {
+.settings-card,
+.composer-strip,
+.header-profile,
+.modal-panel {
     backdrop-filter: blur(16px);
     box-shadow: var(--shadow);
 }
 
-.side-rail {
+.app-header {
     display: grid;
-    grid-template-rows: auto auto auto 1fr;
+    grid-template-columns: minmax(0, 1.2fr) auto auto;
     gap: 18px;
-    padding: 24px;
+    align-items: center;
+    padding: 20px 24px;
     border-radius: var(--radius-xl);
     background:
         linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0)),
@@ -157,10 +189,9 @@ textarea {
     border: 1px solid var(--line);
 }
 
-.workspace {
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    gap: 22px;
+.header-brand,
+.profile-summary,
+.banner-copy {
     min-width: 0;
 }
 
@@ -168,6 +199,7 @@ textarea {
 .banner-copy h2,
 .board-head h3,
 .panel-head h3,
+.composer-strip h3,
 .login-showcase h1,
 .login-card h2 {
     margin: 0;
@@ -176,7 +208,7 @@ textarea {
 }
 
 .brand-stack h1 {
-    font-size: 2.4rem;
+    font-size: 2.3rem;
 }
 
 .banner-copy h2,
@@ -201,7 +233,7 @@ textarea {
     line-height: 1.6;
 }
 
-.side-nav,
+.app-nav,
 .profile-actions,
 .form-actions,
 .control-group,
@@ -215,22 +247,31 @@ textarea {
 .nav-link,
 .ghost-action,
 .chip,
+.primary-action,
+.fab-button {
+    transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+}
+
+.nav-link,
+.ghost-action,
+.chip,
 .primary-action {
     padding: 12px 16px;
     border-radius: 999px;
     border: 1px solid var(--line);
-    transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
 }
 
 .nav-link:hover,
 .ghost-action:hover,
 .chip:hover,
-.primary-action:hover {
+.primary-action:hover,
+.fab-button:hover {
     transform: translateY(-1px);
 }
 
 .nav-link.active,
-.primary-action {
+.primary-action,
+.fab-button {
     background: linear-gradient(135deg, var(--accent), var(--accent-2));
     color: #07101d;
     border-color: transparent;
@@ -247,7 +288,7 @@ textarea {
     background: rgba(121, 210, 255, 0.14);
 }
 
-.side-panel,
+.header-profile,
 .settings-card {
     padding: 18px;
     border-radius: var(--radius-lg);
@@ -255,9 +296,14 @@ textarea {
     border: 1px solid var(--line);
 }
 
-.profile-panel {
-    display: grid;
-    gap: 12px;
+.header-profile {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.header-actions {
+    justify-content: flex-end;
 }
 
 .profile-mark {
@@ -270,10 +316,36 @@ textarea {
     font-size: 1.2rem;
     background: linear-gradient(135deg, var(--accent), var(--accent-2));
     color: #07101d;
+    flex: 0 0 auto;
 }
 
-.profile-panel h2 {
+.header-profile h2 {
     margin: 0;
+}
+
+.composer-strip {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 24px;
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--line);
+    background:
+        linear-gradient(135deg, rgba(121, 210, 255, 0.08), rgba(124, 109, 255, 0.1)),
+        var(--surface);
+}
+
+.fab-button {
+    width: 68px;
+    height: 68px;
+    border-radius: 22px;
+    border: none;
+    display: grid;
+    place-items: center;
+    font-size: 2.2rem;
+    line-height: 1;
+    box-shadow: 0 18px 35px rgba(0, 0, 0, 0.25);
 }
 
 .panel-head.compact {
@@ -461,7 +533,7 @@ textarea {
     min-height: 260px;
 }
 
-.page-footer {
+.app-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -498,6 +570,41 @@ textarea {
 
 .static-chip.high {
     color: var(--red);
+}
+
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: 30;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(4, 8, 16, 0.74);
+}
+
+.modal-panel {
+    position: relative;
+    z-index: 1;
+    width: min(680px, 100%);
+    padding: 24px;
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--line);
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0)),
+        var(--surface);
+}
+
+.modal-panel .form-actions {
+    justify-content: flex-end;
 }
 
 .login-shell {
@@ -652,15 +759,11 @@ a:focus-visible {
 }
 
 @media (max-width: 1180px) {
-    .page-shell,
+    .app-header,
     .login-stage,
     .top-banner,
     .settings-columns {
         grid-template-columns: 1fr;
-    }
-
-    .side-rail {
-        grid-template-rows: auto;
     }
 
     .showcase-grid,
@@ -670,21 +773,20 @@ a:focus-visible {
 }
 
 @media (max-width: 780px) {
-    .page-shell,
-    .login-shell {
+    .app-shell,
+    .login-shell,
+    .modal {
         padding: 12px;
     }
 
-    .page-shell {
-        gap: 12px;
-    }
-
-    .side-rail,
+    .app-header,
     .top-banner,
     .board-surface,
-    .page-footer,
+    .app-footer,
     .login-showcase,
-    .login-card {
+    .login-card,
+    .composer-strip,
+    .modal-panel {
         padding: 18px;
     }
 
@@ -695,11 +797,23 @@ a:focus-visible {
         grid-template-columns: 1fr;
     }
 
+    .app-header,
+    .composer-strip,
     .board-head,
-    .page-footer,
-    .preview-header {
+    .app-footer,
+    .preview-header,
+    .header-profile {
         flex-direction: column;
         align-items: flex-start;
+    }
+
+    .app-header {
+        display: flex;
+    }
+
+    .fab-button {
+        width: 60px;
+        height: 60px;
     }
 }
 

@@ -17,13 +17,13 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(
+                                "/",
+                                "/index.html",
                                 "/login.html",
-                                "/style.css",
-                                "/style.css*",
-                                "/preferences.js",
-                                "/preferences.js*",
-                                "/auth.js",
-                                "/auth.js*",
+                                "/settings.html",
+                                "/pages/login.html",
+                                "/css/**",
+                                "/js/**",
                                 "/favicon.ico",
                                 "/error",
                                 "/oauth2/**",
@@ -32,12 +32,12 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(oauth2 -> oauth2
-                        .loginPage("/login.html")
-                        .defaultSuccessUrl("/index.html", true)
+                        .loginPage("/pages/login.html")
+                        .defaultSuccessUrl("/pages/index.html", true)
                 )
                 .logout(logout -> logout
                         .logoutRequestMatcher(PathPatternRequestMatcher.pathPattern("/logout"))
-                        .logoutSuccessUrl("/login.html?logout")
+                        .logoutSuccessUrl("/pages/login.html?logout")
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
                 )

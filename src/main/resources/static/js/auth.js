@@ -1,4 +1,6 @@
 const AUTH_ME_URL = "/api/auth/me";
+const LOGIN_PAGE_URL = "/pages/login.html";
+const HOME_PAGE_URL = "/pages/index.html";
 
 let currentUser = null;
 
@@ -22,7 +24,7 @@ async function fetchCurrentUser() {
 async function requireAuth() {
     const user = await fetchCurrentUser();
     if (!user) {
-        window.location.href = "/login.html";
+        window.location.href = LOGIN_PAGE_URL;
         return null;
     }
     return user;
@@ -59,7 +61,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (document.body.dataset.page === "login") {
         const user = await fetchCurrentUser();
         if (user) {
-            window.location.href = "/index.html";
+            window.location.href = HOME_PAGE_URL;
         }
     }
 });
